@@ -13,7 +13,23 @@
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item"><a class="nav-link" href="{{ route('form') }}">Form Pelaporan</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('daftar') }}">Daftar Laporan</a></li>
+                    @auth
+                        <li class="nav-item"><a class="nav-link" href="{{ route('daftar') }}">Daftar Laporan</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ route('profile') }}">Profil Petugas</a></li>
+                    @endauth
+                </ul>
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    @guest
+                        <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">Login</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ route('register') }}">Register</a></li>
+                    @else
+                        <li class="nav-item">
+                            <form action="{{ route('logout') }}" method="POST" class="d-inline">
+                                @csrf
+                                <button type="submit" class="btn btn-link nav-link text-white text-decoration-none">Logout ({{ Auth::user()->name }})</button>
+                            </form>
+                        </li>
+                    @endguest
                 </ul>
             </div>
         </div>
@@ -28,4 +44,3 @@
     </footer>
 </body>
 </html>
-
